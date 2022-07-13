@@ -2,6 +2,7 @@ package com.server.endogphin.config;
 
 import com.server.endogphin.auth.CustomOAuth2UserService;
 import com.server.endogphin.auth.JwtAuthCustomDsl;
+import com.server.endogphin.constants.Constants;
 import com.server.endogphin.domain.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -16,6 +17,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
     private final CustomOAuth2UserService customOAuth2UserService;
     private final MemberRepository memberRepository;
+    private final Constants constants;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -28,7 +30,7 @@ public class SecurityConfig {
                 .httpBasic().disable() // 둘다 안쓸꺼라 비활성화
                 .headers().frameOptions().disable() // h2-console 사용을 위한 설정
                 .and()
-                .apply(new JwtAuthCustomDsl(memberRepository))
+                .apply(new JwtAuthCustomDsl(memberRepository, constants))
                 .and()
                 .authorizeRequests()
                 .antMatchers("/mdo/**").authenticated()
