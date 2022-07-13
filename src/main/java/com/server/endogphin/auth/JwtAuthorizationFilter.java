@@ -2,6 +2,7 @@ package com.server.endogphin.auth;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.server.endogphin.constants.Constants;
 import com.server.endogphin.domain.member.Member;
 import com.server.endogphin.domain.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -24,11 +25,13 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
     private final MemberRepository memberRepository;
     private AuthenticationManager authenticationManager;
+    private final Constants constants;
 
 
-    public JwtAuthorizationFilter(AuthenticationManager authenticationManager, MemberRepository memberRepository) {
+    public JwtAuthorizationFilter(AuthenticationManager authenticationManager, MemberRepository memberRepository, Constants constants) {
         super(authenticationManager);
         this.memberRepository = memberRepository;
+        this.constants = constants;
     }
 
     @Override
@@ -44,7 +47,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
         }
 
         String token = jwtHeader.replace("Bearer ", "");
-        String loginId = JWT.require(Algorithm.HMAC512("MdoTest")).build().verify(token).getClaim("loginId").asString();
+        String loginId = JWT.require(Algorithm.HMAC512(constants.JWT_SECRET)).build().verify(token).getClaim("loginId").asString();
 
         if(loginId == null) {
             chain.doFilter(request, response);

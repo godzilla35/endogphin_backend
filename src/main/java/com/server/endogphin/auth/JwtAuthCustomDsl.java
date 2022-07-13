@@ -14,10 +14,10 @@ public class JwtAuthCustomDsl extends AbstractHttpConfigurer<JwtAuthCustomDsl, H
     private final Constants constants;
 
     @Override
-    public void configure(HttpSecurity http) throws Exception {
+    public void configure(HttpSecurity http) {
         AuthenticationManager authenticationManager = http.getSharedObject(AuthenticationManager.class);
         http.addFilter(new JwtAuthenticationFilter(authenticationManager, constants))
-                .addFilter(new JwtAuthorizationFilter(authenticationManager, memberRepository));
+                .addFilter(new JwtAuthorizationFilter(authenticationManager, memberRepository, constants));
 
 
     }
