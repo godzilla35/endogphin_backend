@@ -1,5 +1,6 @@
 package com.server.endogphin.domain.dog;
 
+import com.server.endogphin.domain.BaseEntity;
 import com.server.endogphin.domain.member.Member;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,7 +11,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 @Entity
-public class Dog {
+public class Dog extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

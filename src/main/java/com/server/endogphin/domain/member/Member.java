@@ -1,6 +1,7 @@
 package com.server.endogphin.domain.member;
 
 import com.server.endogphin.api.dto.MemberSaveResponseDto;
+import com.server.endogphin.domain.BaseEntity;
 import com.server.endogphin.domain.dog.Dog;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,7 +13,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @Entity
-public class Member {
+public class Member extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
